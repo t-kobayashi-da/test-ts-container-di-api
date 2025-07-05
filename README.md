@@ -70,6 +70,7 @@ v22.16.0
 npm install express
 npm install typescript ts-node @types/node @types/express --save-dev
 npm install jest ts-jest @types/jest --save-dev
+npm install --save-dev supertest @types/supertest
 ```
 
 tsconfig.json 生成
@@ -180,6 +181,3 @@ DIの全体構成をまとめる
 最終的なサーバー起動部分
 - ここは実質「起動スクリプト」なのでTDDの範囲外でもよい
 - 動作確認の最後で着手
-
-# 5. ユニットテスト雛形
-## test/service/fileService.test.ts
