@@ -92,8 +92,14 @@ npx tsc --init
 }
 ```
 
-# 3. スクリプト定義（package.json）
+jest初期設定
+```bash
+npx ts-jest config:init
+```
 
+# 3. スクリプト定義
+
+package.json
 ```json
 "scripts": {
   "dev": "ts-node src/main.ts",
@@ -103,3 +109,31 @@ npx tsc --init
   "ci": "npm ci"
 }
 ```
+
+# 4. コード実装
+
+今回のコードは「責務ごと」に4つのレイヤーに分離
+
+レイヤー|ファイル|役割
+--|--|--
+Router|fileRouter.ts|エンドポイントの定義
+Controller|fileController.ts|リクエスト単位の処理制御
+Service|fileService.ts|ビジネスロジック(今回は簡単)
+Repository|fileRepository.ts|ファイルなどの外部操作
+
+この分離による恩恵
+- 可読性アップ
+- 変更の影響範囲が狭くなる
+- テストしやすい構造
+
+## src/main.ts
+## src/app.ts
+## src/repository/fileRepository.ts
+## src/service/fileService.ts
+## src/controller/fileController.ts
+## src/router/fileRouter.ts
+## src/util/logger.ts
+## hello.txt
+
+# 5. ユニットテスト雛形
+## test/service/fileService.test.ts
