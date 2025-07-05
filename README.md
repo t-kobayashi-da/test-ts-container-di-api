@@ -110,7 +110,7 @@ package.json
 }
 ```
 
-# 4. コード実装
+# 4. コード実装 (DI/テスト駆動開発)
 
 今回のコードは「責務ごと」に4つのレイヤーに分離
 
@@ -126,14 +126,60 @@ Repository|fileRepository.ts|ファイルなどの外部操作
 - 変更の影響範囲が狭くなる
 - テストしやすい構造
 
-## src/main.ts
-## src/app.ts
+テスト駆動開発の場合は、以下の順での実装が良さそう
+- 補足：なぜこの順番？
+  - 揮発性依存から固める
+    - 上位層が下位に依存する構造なので、下から順に作るとブレない
+  - モックを前提に層ごとにテスト
+    - ファイル実データには極力依存しない設計ができる
+  - 最後にApp全体を組む
+    - 単体品質を確保した上で、全体統合へ進める
+
 ## src/repository/fileRepository.ts
-## src/service/fileService.ts
-## src/controller/fileController.ts
-## src/router/fileRouter.ts
-## src/util/logger.ts
+最下層・揮発性依存から着手
+- 外部リソース（ファイル読み込み）の仕様を決めてテストを書く
+- 内容が安定しないのでダミー・モックを使いやすくする
+
 ## hello.txt
+Repositoryのテストを動かすため、必要最低限の実データ準備
+
+## src/repository/__tests__/fileRepository.test.ts
+RepositoryはfsをMock
+
+## src/service/fileService.ts
+
+## src/service/__tests__/fileService.test.ts
+Repositoryを注入して、ビジネスロジック単位のテストを書く
+- Repositoryはモック化し、本物のファイルには依存しない
+- ロジックが正しいか純粋に検証できる
+
+## src/util/logger.ts
+
+## src/util/__tests__/logger.test.ts
+Service層や以降の層で使う補助機能のため後回しでも良いが、TDD的には副作用を意識して早めに実装
+
+## src/controller/fileController.ts
+
+## src/controller/__tests__/fileController.test.ts
+Serviceを注入してリクエスト単位のロジックを確認
+- Serviceはモックで良い
+- リクエスト→レスポンスの流れの単体テストを書く
+
+## src/router/fileRouter.ts
+
+## src/router/__tests__/fileRouter.test.ts
+Expressのルーティングを最小構成でつなげる
+- Controllerのテストが先にあるので、ここは結線確認がメイン
+
+## src/app.ts
+DIの全体構成をまとめる
+- 各層が単体テスト済みなので、安全に組み合わせ可能
+- App単位で統合テストも狙える
+
+## src/main.ts
+最終的なサーバー起動部分
+- ここは実質「起動スクリプト」なのでTDDの範囲外でもよい
+- 動作確認の最後で着手
 
 # 5. ユニットテスト雛形
 ## test/service/fileService.test.ts
