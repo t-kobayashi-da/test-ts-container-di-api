@@ -1,0 +1,32 @@
+{
+  "name": "test-ts-container-di-api",
+  "version": "1.0.0",
+  "description": "TypeScript・DI・コンテナ構成の学習用API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/t-kobayashi-da/test-ts-container-di-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/t-kobayashi-da/test-ts-container-di-api/issues"
+  },
+  "homepage": "https://github.com/t-kobayashi-da/test-ts-container-di-api#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.0.10",
+    "jest": "^30.0.4",
+    "ts-jest": "^29.4.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
